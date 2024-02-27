@@ -7,7 +7,7 @@ using CounterStrikeSharp.API.Modules.Entities.Constants;
 using CounterStrikeSharp.API.Modules.Utils;
 
 namespace KnifeGiver;
-[MinimumApiVersion(96)]
+[MinimumApiVersion(175)]
 
 public class KnifeGiver : BasePlugin
 {
@@ -15,6 +15,7 @@ public class KnifeGiver : BasePlugin
     public override string ModuleAuthor => "ji";
     public override string ModuleDescription => "Ensures players in custom gamemodes spawn with a knife.";
     public override string ModuleVersion => "build1";
+    public FakeConVar<string> WeaponCvar = new("css_starting_weapon", "What weapon should a player spawn with", "weapon_knife");
 
     public override void Load(bool hotReload)
     {
@@ -26,7 +27,7 @@ public class KnifeGiver : BasePlugin
         var player = @event.Userid;
         
         if(!player.IsValid || !player.PlayerPawn.IsValid) return HookResult.Continue;       
-        player.GiveNamedItem("weapon_knife"); 
+        player.GiveNamedItem(WeaponCvar.Value); 
         return HookResult.Continue;
     }
 }
