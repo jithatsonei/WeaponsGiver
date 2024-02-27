@@ -16,10 +16,8 @@ public class KnifeGiver : BasePlugin
     public override string ModuleDescription => "Ensures players in custom gamemodes spawn with a knife.";
     public override string ModuleVersion => "build1";
 
-    // This happens when the plugin is loaded
     public override void Load(bool hotReload)
     {
-        // Registers and hooks in to the game events we intend to use
         RegisterEventHandler<EventPlayerSpawn>(Event_PlayerSpawn, HookMode.Post);
     }
 
