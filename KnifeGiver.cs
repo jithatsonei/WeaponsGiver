@@ -13,13 +13,20 @@ public class KnifeGiver : BasePlugin
 {
     public override string ModuleName => "Knife Giver";
     public override string ModuleAuthor => "ji";
-    public override string ModuleDescription => "Ensures players in custom gamemodes spawn with a knife.";
-    public override string ModuleVersion => "build1";
-    public FakeConVar<string> WeaponCvar = new("css_starting_weapon", "What weapon should a player spawn with", "weapon_knife");
+    public override string ModuleDescription => "Ensures players in custom gamemodes spawn with starting weapons.";
+    public override string ModuleVersion => "build2";
 
     public override void Load(bool hotReload)
     {
         RegisterEventHandler<EventPlayerSpawn>(Event_PlayerSpawn, HookMode.Post);
+        
+        var tPrimary = ConVar.Find("mp_t_default_primary").StringValue();
+        var tSecondary = ConVar.Find("mp_t_default_secondary").StringValue();
+        var tMelee = ConVar.Find("mp_t_default_melee").StringValue();
+
+        var ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue();
+        var ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue();
+        var ctMelee = ConVar.Find("mp_ct_default_melee").StringValue();
     }
 
     private HookResult Event_PlayerSpawn(EventPlayerSpawn @event, GameEventInfo info)
@@ -27,7 +34,22 @@ public class KnifeGiver : BasePlugin
         var player = @event.Userid;
         
         if(!player.IsValid || !player.PlayerPawn.IsValid) return HookResult.Continue;       
-        player.GiveNamedItem(WeaponCvar.Value); 
-        return HookResult.Continue;
+
+        switch(player.TeamNum)
+        {
+            case (byte)CsTeam.Terrorist:
+                if(!String.IsNullOrEmpty(tPrimary)) player.GiveNamedItem(tPrimary);
+                if(!String.IsNullOrEmpty(tSecondary)) player.GiveNamedItem(tSecondary);
+                if(!String.IsNullOrEmpty(tMelee)) player.GiveNamedItem(tMelee);
+                break;
+            
+            case (byte)CsTeam.CounterTerrorist:
+                if(!String.IsNullOrEmpty(ctPrimary)) player.GiveNamedItem(ctPrimary);
+                if(!String.IsNullOrEmpty(ctSecondary)) player.GiveNamedItem(ctSecondary);
+                if(!String.IsNullOrEmpty(ctMelee)) player.GiveNamedItem(ctMelee);
+                break;
+        }
+
+    return HookResult.Continue;
     }
 }
