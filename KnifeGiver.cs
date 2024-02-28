@@ -11,10 +11,10 @@ namespace KnifeGiver;
 
 public class KnifeGiver : BasePlugin
 {
-    public override string ModuleName => "Knife Giver";
+    public override string ModuleName => "WeaponsGiver";
     public override string ModuleAuthor => "ji";
     public override string ModuleDescription => "Ensures players in custom gamemodes spawn with starting weapons.";
-    public override string ModuleVersion => "build2";
+    public override string ModuleVersion => "build3";
 
     public override void Load(bool hotReload)
     {
@@ -55,6 +55,6 @@ public class KnifeGiver : BasePlugin
                 break;
         }
 
-    return HookResult.Continue;
+        return HookResult.Continue;
     }
 }
