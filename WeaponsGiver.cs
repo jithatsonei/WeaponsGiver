@@ -31,14 +31,13 @@ namespace WeaponsGiver
 
         public void GetVars()
         {
-            if (!String.IsNullOrEmpty(ConVar.Find("mp_t_default_melee").StringValue())) {
-                tPrimary = ConVar.Find("mp_t_default_primary").StringValue;
-                tSecondary = ConVar.Find("mp_t_default_secondary").StringValue;
-                tMelee = ConVar.Find("mp_t_default_melee").StringValue;
-                ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue;
-                ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue;
-                ctMelee = ConVar.Find("mp_ct_default_melee").StringValue;
-            }
+            tPrimary = ConVar.Find("mp_t_default_primary").StringValue;
+            tSecondary = ConVar.Find("mp_t_default_secondary").StringValue;
+            tMelee = ConVar.Find("mp_t_default_melee").StringValue;
+            ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue;
+            ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue;
+            ctMelee = ConVar.Find("mp_ct_default_melee").StringValue;
+            
         }
 
         private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
