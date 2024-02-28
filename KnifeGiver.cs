@@ -25,13 +25,13 @@ public class KnifeGiver : BasePlugin
 
     public void GetVars()
     {
-        var tPrimary = ConVar.Find("mp_t_default_primary").StringValue();
-        var tSecondary = ConVar.Find("mp_t_default_secondary").StringValue();
-        var tMelee = ConVar.Find("mp_t_default_melee").StringValue();
+        var tPrimary = ConVar.Find("mp_t_default_primary").Value.ToString();
+        var tSecondary = ConVar.Find("mp_t_default_secondary").Value.ToString();
+        var tMelee = ConVar.Find("mp_t_default_melee").Value.ToString();
 
-        var ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue();
-        var ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue();
-        var ctMelee = ConVar.Find("mp_ct_default_melee").StringValue();
+        var ctPrimary = ConVar.Find("mp_ct_default_primary").Value.ToString();
+        var ctSecondary = ConVar.Find("mp_ct_default_secondary").Value.ToString();
+        var ctMelee = ConVar.Find("mp_ct_default_melee").Value.ToString();
     }
 
     private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
