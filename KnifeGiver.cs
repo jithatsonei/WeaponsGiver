@@ -19,7 +19,11 @@ public class KnifeGiver : BasePlugin
     public override void Load(bool hotReload)
     {
         RegisterEventHandler<EventPlayerSpawn>(Event_PlayerSpawn, HookMode.Post);
-        
+        RegisterEventHandler<EventRoundPrestart>(Event_RoundPrestart, HookMode.Pre);
+    }
+
+    private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
+    {
         var tPrimary = ConVar.Find("mp_t_default_primary").StringValue();
         var tSecondary = ConVar.Find("mp_t_default_secondary").StringValue();
         var tMelee = ConVar.Find("mp_t_default_melee").StringValue();
@@ -27,6 +31,7 @@ public class KnifeGiver : BasePlugin
         var ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue();
         var ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue();
         var ctMelee = ConVar.Find("mp_ct_default_melee").StringValue();
+        return HookResult.Continue;
     }
 
     private HookResult Event_PlayerSpawn(EventPlayerSpawn @event, GameEventInfo info)
@@ -35,15 +40,15 @@ public class KnifeGiver : BasePlugin
         
         if(!player.IsValid || !player.PlayerPawn.IsValid) return HookResult.Continue;       
 
-        switch(player.TeamNum)
+        switch((CsTeam)player.TeamNum)
         {
-            case (byte)CsTeam.Terrorist:
+            case CsTeam.Terrorist:
                 if(!String.IsNullOrEmpty(tPrimary)) player.GiveNamedItem(tPrimary);
                 if(!String.IsNullOrEmpty(tSecondary)) player.GiveNamedItem(tSecondary);
                 if(!String.IsNullOrEmpty(tMelee)) player.GiveNamedItem(tMelee);
                 break;
             
-            case (byte)CsTeam.CounterTerrorist:
+            case CsTeam.CounterTerrorist:
                 if(!String.IsNullOrEmpty(ctPrimary)) player.GiveNamedItem(ctPrimary);
                 if(!String.IsNullOrEmpty(ctSecondary)) player.GiveNamedItem(ctSecondary);
                 if(!String.IsNullOrEmpty(ctMelee)) player.GiveNamedItem(ctMelee);
