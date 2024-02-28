@@ -6,10 +6,10 @@ using CounterStrikeSharp.API.Modules.Entities.Constants;
 using CounterStrikeSharp.API.Modules.Cvars;
 using CounterStrikeSharp.API.Modules.Utils;
 
-namespace KnifeGiver
+namespace WeaponsGiver
 {
     [MinimumApiVersion(175)]
-    public class KnifeGiver : BasePlugin
+    public class WeaponsGiver : BasePlugin
     {
         private string tPrimary;
         private string tSecondary;
@@ -21,27 +21,29 @@ namespace KnifeGiver
         public override string ModuleName => "WeaponsGiver";
         public override string ModuleAuthor => "ji";
         public override string ModuleDescription => "Ensures players in custom gamemodes spawn with starting weapons.";
-        public override string ModuleVersion => "build3";
+        public override string ModuleVersion => "build4";
 
         public override void Load(bool hotReload)
         {
             RegisterEventHandler<EventPlayerSpawn>(Event_PlayerSpawn, HookMode.Post);
             RegisterEventHandler<EventRoundPrestart>(Event_RoundPrestart, HookMode.Pre);
-            GetVars();
         }
 
         public void GetVars()
         {
-            tPrimary = ConVar.Find("mp_t_default_primary").StringValue;
-            tSecondary = ConVar.Find("mp_t_default_secondary").StringValue;
-            tMelee = ConVar.Find("mp_t_default_melee").StringValue;
-            ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue;
-            ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue;
-            ctMelee = ConVar.Find("mp_ct_default_melee").StringValue;
+            if (!String.IsNullOrEmpty(ConVar.Find("mp_t_default_melee").StringValue())) {
+                tPrimary = ConVar.Find("mp_t_default_primary").StringValue;
+                tSecondary = ConVar.Find("mp_t_default_secondary").StringValue;
+                tMelee = ConVar.Find("mp_t_default_melee").StringValue;
+                ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue;
+                ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue;
+                ctMelee = ConVar.Find("mp_ct_default_melee").StringValue;
+            }
         }
 
         private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
         {
+            GetVars();
             return HookResult.Continue;
         }
 
