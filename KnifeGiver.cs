@@ -4,6 +4,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes;
 using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Entities.Constants;
+using CounterStrikeSharp.API.Modules.Cvars;
 using CounterStrikeSharp.API.Modules.Utils;
 
 namespace KnifeGiver;
@@ -22,7 +23,7 @@ public class KnifeGiver : BasePlugin
         RegisterEventHandler<EventRoundPrestart>(Event_RoundPrestart, HookMode.Pre);
     }
 
-    private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
+    public void GetVars()
     {
         var tPrimary = ConVar.Find("mp_t_default_primary").StringValue();
         var tSecondary = ConVar.Find("mp_t_default_secondary").StringValue();
@@ -31,6 +32,11 @@ public class KnifeGiver : BasePlugin
         var ctPrimary = ConVar.Find("mp_ct_default_primary").StringValue();
         var ctSecondary = ConVar.Find("mp_ct_default_secondary").StringValue();
         var ctMelee = ConVar.Find("mp_ct_default_melee").StringValue();
+    }
+
+    private HookResult Event_RoundPrestart(EventRoundPrestart @event, GameEventInfo info)
+    {
+        GetVars();
         return HookResult.Continue;
     }
 
