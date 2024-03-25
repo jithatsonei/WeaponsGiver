@@ -49,7 +49,7 @@ namespace WeaponsGiver
 
         private HookResult Event_PlayerSpawn(EventPlayerSpawn @event, GameEventInfo info)
         {
-            BasePlugin.AddTimer(1, giveWeapons())
+            BasePlugin.AddTimer(1, giveWeapons());
             return HookResult.Continue;
         }
 
