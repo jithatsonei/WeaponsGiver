@@ -5,8 +5,9 @@ using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Entities.Constants;
 using CounterStrikeSharp.API.Modules.Cvars;
 using CounterStrikeSharp.API.Modules.Utils;
-using System
-using System.Timers
+using System;
+using System.Timers;
+
 namespace WeaponsGiver
 {
     [MinimumApiVersion(175)]
