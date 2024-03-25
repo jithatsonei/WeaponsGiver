@@ -50,15 +50,13 @@ namespace WeaponsGiver
 
         private HookResult Event_PlayerSpawn(EventPlayerSpawn @event, GameEventInfo info)
         {
-            BasePlugin.AddTimer(1, giveWeapons());
+            this.AddTimer(1, ()=>GiveWeapons(@event.Userid));
             return HookResult.Continue;
         }
 
-        private void giveWeapons()
+        private void GiveWeapons(CCSPlayerController player)
         {
-            var player = @event.Userid;
-            
-            if(!player.IsValid || !player.PlayerPawn.IsValid) return HookResult.Continue;       
+            if(!player.IsValid || !player.PlayerPawn.IsValid) return;       
 
             switch((CsTeam)player.TeamNum)
             {
